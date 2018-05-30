@@ -1,14 +1,17 @@
 document.addEventListener('DOMContentLoaded', initButtons);
 var studentsignupVisible = false;
+var professionalsignupVisible = false;
 
 function initButtons(){
   var studentbtn = document.querySelector('#studentbtn');
   studentbtn.addEventListener('click', loadStudentSignup);
+  var professionalbtn = document.querySelector('#professionalbtn');
+  professionalbtn.addEventListener('click', loadProfessionalSignup);
 }
 
 function loadStudentSignup(){
+  hideInputs();
   if(!studentsignupVisible){
-
     document.querySelector("#stdorp").style.display = "none";
     // create elements of student signup form
     var container = document.createElement('div');
@@ -18,8 +21,12 @@ function loadStudentSignup(){
     var username = document.createElement('input');
     var email = document.createElement('input');
     var password = document.createElement('input');
+    var cancel = document.createElement('button');
     // set attributes 
     container.setAttribute('class', 'container');
+    container.setAttribute('id', 'studentform');
+    cancel.setAttribute('class', 'btn btn-warning');
+    cancel.textContent = 'cancel';
     studentsignupform.setAttribute('action', '/signup');
     studentsignupform.setAttribute('method', 'post');
 
@@ -39,11 +46,81 @@ function loadStudentSignup(){
     studentsignupform.appendChild(username);
     studentsignupform.appendChild(email);
     studentsignupform.appendChild(password);
+    cancel.addEventListener('click', hideInputs);
     container.appendChild(h1);
     container.appendChild(studentsignupform);
+    container.appendChild(cancel);
     document.body.appendChild(container);
     studentsignupVisible = true;
+  } else {
+    document.querySelector("#studentform").style.display = "block";
+    document.querySelector("#stdorp").style.display = "none";
   }
+}
+
+function loadProfessionalSignup(){
+  hideInputs();
+  if(!professionalsignupVisible){
+    document.querySelector("#stdorp").style.display = "none";
+    // create elements of student signup form
+    var container = document.createElement('div');
+    var h1 = document.createElement('h1');
+    var professionalsignupform = document.createElement('form');
+    var professionalname = document.createElement('input');
+    var company = document.createElement('input');
+    var username = document.createElement('input');
+    var email = document.createElement('input');
+    var password = document.createElement('input');
+    var cancel = document.createElement('button');
+    // set attributes 
+    container.setAttribute('class', 'container');
+    container.setAttribute('id', 'professionalform');
+    cancel.setAttribute('class', 'btn btn-warning');
+    cancel.textContent = 'cancel';
+    professionalsignupform.setAttribute('action', '/signup');
+    professionalsignupform.setAttribute('method', 'post');
+
+    // set value attributes
+    professionalname.setAttribute('type', 'text');
+    initInput(professionalname, "Professional's name");
+    company.setAttribute('type', 'text');
+    initInput(company, "Company");
+    username.setAttribute('type', 'text');
+    initInput(username, "username");
+    email.setAttribute('type', 'email');
+    initInput(email, "e-mail");
+    password.setAttribute('type', 'password');
+    initInput(password, "password");
+
+    h1.textContent = "Create your Professional Account";
+    // append to the body
+    professionalsignupform.appendChild(professionalname);
+    professionalsignupform.appendChild(company);
+    professionalsignupform.appendChild(username);
+    professionalsignupform.appendChild(email);
+    professionalsignupform.appendChild(password);
+    cancel.addEventListener('click', hideInputs);
+    container.appendChild(h1);
+    container.appendChild(professionalsignupform);
+    container.appendChild(cancel);
+    document.body.appendChild(container);
+    professionalsignupVisible = true;
+  } else {
+    document.querySelector("#professionalform").style.display = "block";
+    document.querySelector("#stdorp").style.display = "none";
+  }
+}
+
+function hideInputs(){
+  if(document.querySelector("#studentform"))
+  {
+    document.querySelector("#studentform").style.display = "none";
+  }
+  if(document.querySelector("#professionalform"))
+  {
+    document.querySelector('#professionalform').style.display = "none"; 
+  }
+  document.querySelector("#stdorp").style.display = "block";
 }
 
 /******************************************************************************
@@ -55,6 +132,9 @@ function initInput(inputBox, value){
   {
     case "Student's name":
       inputBox.setAttribute('onblur', "blurInput(this, 'Students name')");
+      break;
+    case "Company":
+      inputBox.setAttribute('onblur', "blurInput(this, 'Company')");
       break;
     case "username":
       inputBox.setAttribute('onblur', "blurInput(this, 'username')");
