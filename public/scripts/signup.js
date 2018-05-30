@@ -22,11 +22,14 @@ function loadStudentSignup(){
     var email = document.createElement('input');
     var password = document.createElement('input');
     var cancel = document.createElement('button');
+    var signup = document.createElement('input');
     // set attributes 
     container.setAttribute('class', 'container');
     container.setAttribute('id', 'studentform');
     cancel.setAttribute('class', 'btn btn-warning');
     cancel.textContent = 'cancel';
+    signup.setAttribute('type', 'submit');
+    signup.setAttribute('class', 'btn btn-success');
     studentsignupform.setAttribute('action', '/signup');
     studentsignupform.setAttribute('method', 'post');
 
@@ -34,11 +37,14 @@ function loadStudentSignup(){
     studentname.setAttribute('type', 'text');
     initInput(studentname, "Student's name");
     username.setAttribute('type', 'text');
+    username.setAttribute('name', 'username');
     initInput(username, "username");
     email.setAttribute('type', 'email');
     initInput(email, "e-mail");
     password.setAttribute('type', 'password');
     initInput(password, "password");
+    signup.setAttribute('value', 'Signup');
+    signup.setAttribute('name', 'student_signup');
 
     h1.textContent = "Create your Student Account";
     // append to the body
@@ -46,6 +52,7 @@ function loadStudentSignup(){
     studentsignupform.appendChild(username);
     studentsignupform.appendChild(email);
     studentsignupform.appendChild(password);
+    studentsignupform.appendChild(signup);
     cancel.addEventListener('click', hideInputs);
     container.appendChild(h1);
     container.appendChild(studentsignupform);
@@ -72,11 +79,14 @@ function loadProfessionalSignup(){
     var email = document.createElement('input');
     var password = document.createElement('input');
     var cancel = document.createElement('button');
+    var signup = document.createElement('input');
     // set attributes 
     container.setAttribute('class', 'container');
     container.setAttribute('id', 'professionalform');
     cancel.setAttribute('class', 'btn btn-warning');
     cancel.textContent = 'cancel';
+    signup.setAttribute('type', 'submit');
+    signup.setAttribute('class', 'btn btn-success');
     professionalsignupform.setAttribute('action', '/signup');
     professionalsignupform.setAttribute('method', 'post');
 
@@ -86,11 +96,14 @@ function loadProfessionalSignup(){
     company.setAttribute('type', 'text');
     initInput(company, "Company");
     username.setAttribute('type', 'text');
+    username.setAttribute('name', 'username');
     initInput(username, "username");
     email.setAttribute('type', 'email');
     initInput(email, "e-mail");
     password.setAttribute('type', 'password');
     initInput(password, "password");
+    signup.setAttribute('value', 'Signup');
+    signup.setAttribute('name', 'professional_signup');
 
     h1.textContent = "Create your Professional Account";
     // append to the body
@@ -99,6 +112,7 @@ function loadProfessionalSignup(){
     professionalsignupform.appendChild(username);
     professionalsignupform.appendChild(email);
     professionalsignupform.appendChild(password);
+    professionalsignupform.appendChild(signup);
     cancel.addEventListener('click', hideInputs);
     container.appendChild(h1);
     container.appendChild(professionalsignupform);

@@ -32,6 +32,23 @@ router.get('/signup', function(req,res,next){
   res.render('accounts/signup', context);
 });
 
+router.post('/signup', function(req, res){
+  var context = {};
+  if(req.body['student_signup']){
+    req.session.username = req.body.username;
+  } else if(req.body['professional_signup']){
+    req.session.username = req.body.username;
+  }
+
+  if(!req.session.username){
+    res.render('accounts/signup', context);
+    return;
+  }
+  context.username = req.session.username;
+  res.render('home', context);
+});
+
+
 router.get('/login', function(req,res,next){
   var context = {};
   if(req.session.username)
