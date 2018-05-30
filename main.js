@@ -5,6 +5,7 @@
 
 //express!
 var express = require('express');
+var session = require('express-session');
 var app = express();
 //express-handlebars!
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -16,6 +17,9 @@ var routes = require('./routes/routes.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(session({secret: 'skillventuresphinx'}));
+
 
 //events!
 var events = require('events');

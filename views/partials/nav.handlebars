@@ -4,7 +4,11 @@
   </div>
   <ul class="nav navbar-nav">
     <li><a href="about">About us</a></li>
+    {{#if username }}
+    <li><a href="logout">logout</a></li>
+    {{else}}
     <li><a href="signup">signup</a></li>
     <li><a href="login">login</a></li>
+    {{/if}}
   </ul>
 </div>
