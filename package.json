@@ -1,10 +1,10 @@
 {
-  "name": "hello-world",
+  "name": "skill-venture",
   "version": "1.0.0",
-  "description": "OSU CS61 Project with express and node.js",
-  "main": "main.js",
+  "description": "OSU CS361 Project: SkillVenture",
+  "main": "app.js",
   "scripts": {
-    "start": "node main.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "OSU",
