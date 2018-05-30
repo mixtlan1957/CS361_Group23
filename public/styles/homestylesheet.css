@@ -6,6 +6,10 @@ h1{
   font-weight: bolder;
 }
 
+input {
+  display: block;
+}
+
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
     width: auto;
     height: 350px;

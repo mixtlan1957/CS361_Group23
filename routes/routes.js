@@ -28,6 +28,7 @@ router.get('/signup', function(req,res,next){
     context.username = req.session.username;  
   }
   context.title = "Signup";
+  context.jsscripts = ["signup.js"];
   res.render('accounts/signup', context);
 });
 
@@ -53,16 +54,6 @@ router.post('/login', function(req, res){
   }
   context.username = req.session.username;
   res.render('home', context);
-});
-
-router.get('/login', function(req,res,next){
-  var context = {};
-  if(req.session.username)
-  {
-    context.username = req.session.username;  
-  }
-  context.title = "Login";
-  res.render('accounts/login', context);
 });
 
 router.get('/logout', function(req, res, next){
