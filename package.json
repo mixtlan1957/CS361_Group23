@@ -2,8 +2,9 @@
   "name": "hello-world",
   "version": "1.0.0",
   "description": "OSU CS61 Project with express and node.js",
-  "main": "app.js",
+  "main": "main.js",
   "scripts": {
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "OSU",

@@ -5,16 +5,18 @@
 
 
 <head>
-  <title>CS361 Group23 Project</title>
+  <title>SkillVenture: {{ title }}</title>
  
   <!--  Meta  -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <meta name="description" content="CS290 Final Project"/>
-  <meta name="author" content="Mario">  
+  <meta name="description" content="CS361 Group23 Project: SkillVenture"/>
+  <meta name="author" content="Andrew Schapper, Jennifer Aldover, Mario Franco-Munoz, Sean Foster, Anmolbir Mann">
+  <meta name="customer" content="Chistopher Scott Garoutte">
 
    <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/homestylesheet.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
@@ -25,14 +27,10 @@
     <script src="{{this}}"></script>
     {{/each}}
 
-
-
-
-
-
-
 </head>
-
+<nav class="navbar navbar-inverse">
+  {{>nav}}
+</nav>
 <body>
 
 	{{{body}}}

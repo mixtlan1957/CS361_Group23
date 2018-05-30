@@ -11,6 +11,9 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 //bodyParser!
 var bodyParser = require('body-parser');
+
+var routes = require('./routes/routes.js');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -28,19 +31,15 @@ app.set('mysql', mysql);
 //set dependencies
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', process.argv[2]);
+app.set('port', process.argv[2] || 3000);
 
 
 //filepath!
 express.static('http://localhost:3000/');
 app.use(express.static('public'));
 
-
-//home page
-app.get('/',function(req,res, next){
-  res.render('home');
-});
-
+//routes to homepage and login etc...
+app.use('/', routes);
 
 //404
 app.use(function(req,res){

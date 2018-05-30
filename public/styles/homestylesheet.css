@@ -1,7 +1,10 @@
 body {
-	background = white;
+	background: #a0a0a0;
 }
 
+h1{
+  font-weight: bolder;
+}
 
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
     width: auto;
