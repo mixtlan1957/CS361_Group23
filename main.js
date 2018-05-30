@@ -1,4 +1,7 @@
-
+/*
+ * SkillVenture application
+ * Run using command: node [filename] [port number]
+ */
 
 //express!
 var express = require('express');
@@ -25,7 +28,7 @@ app.set('mysql', mysql);
 //set dependencies
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 7963);
+app.set('port', process.argv[2]);
 
 
 //filepath!
@@ -34,9 +37,7 @@ app.use(express.static('public'));
 
 
 //home page
-app.get('/',function(req,res){
-  
-
+app.get('/',function(req,res, next){
   res.render('home');
 });
 
@@ -58,7 +59,8 @@ app.use(function(err, req, res, next){
 
 
 app.listen(app.get('port'), function(){
-  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+  console.log('Express started on http://localhost:' + app.get('port') 
+  + '; press Ctrl-C to terminate.');
 });
 
 
