@@ -37,9 +37,7 @@ app.use(express.static('public'));
 
 
 //home page
-app.get('/',function(req,res){
-  
-
+app.get('/',function(req,res, next){
   res.render('home');
 });
 
