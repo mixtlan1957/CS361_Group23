@@ -42,3 +42,17 @@ function blurInput(input, content){
 function focusInput(input){
   input.setAttribute('value', '');
 }
+
+
+function blurNumInput(input, content){
+  input.setAttribute("type", "text");
+  blurInput(input, content);
+}
+
+/******************************************************************************
+ * removes text when input is in focus
+ *****************************************************************************/
+function focusNumInput(input){
+  input.setAttribute("type", "number");
+  focusInput(input);
+}
