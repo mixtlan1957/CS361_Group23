@@ -5,6 +5,7 @@
   <ul class="nav navbar-nav">
     <li><a href="about">About us</a></li>
     {{#if username }}
+    <li><a href="profile">{{username}}</a></li>
     <li><a href="logout">logout</a></li>
     {{else}}
     <li><a href="signup">signup</a></li>
