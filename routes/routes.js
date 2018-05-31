@@ -34,6 +34,7 @@ router.get('/signup', function(req,res,next){
 
 router.post('/signup', function(req, res){
   var context = {};
+  context.jsscripts = ["profile.js"];
   req.session.username = req.body.username;
   context.username = req.session.username;
   req.session.fname = req.body.fname;
@@ -97,6 +98,7 @@ router.get('/logout', function(req, res, next){
 
 router.get('/profile', function(req, res, rnext){
   var context = {};
+  context.jsscripts = ["profile.js"];
   if(req.session.username){
     context.username = req.session.username;
     context.fname = req.session.fname;
