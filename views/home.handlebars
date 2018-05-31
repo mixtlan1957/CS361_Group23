@@ -1,4 +1,27 @@
 
 <div class="container">
-  <h1> Welcome to SkillVenture {{username}}</h1>
+  <div class="row">
+    <h1> Welcome to SkillVenture {{username}}</h1>
+  </div>
+  <div class="row justify-content-md-center">
+    {{#if username}}
+    <div class="col col-sm-3"></div>
+    <div class="col col-sm-4">
+        <a href="logout">
+          <button class="btn btn-warning">logout</button>
+        </a>
+    </div>
+     {{else}}
+    <div class="col col-sm-4">
+      <a href="login">
+          <button class="btn btn-success">login</button>
+        </a>
+    </div>
+    <div class="col col-sm-4">
+        <a href="signup">
+          <button class="btn btn-info">signup</button>
+        </a>
+      {{/if}}
+    </div>
+  </div>
 </div>
