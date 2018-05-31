@@ -97,10 +97,9 @@ END;
 -- s is the search keyword
 CREATE PROCEDURE getOpportunities (IN s varchar(255))
 BEGIN
-    SELECT *
-    FROM opportunities o
-    LEFT JOIN professional p  ON o.pid = p.id
-    WHERE o.description LIKE CONCAT('%', s, '%');
+    SELECT title
+    FROM opportunities
+    WHERE title LIKE CONCAT('%', s, '%');
 END;
 //
 
