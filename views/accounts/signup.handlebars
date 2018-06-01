@@ -40,13 +40,15 @@
 
 <div class="container" id="professionalform">
   <h1>Create your Professional Account</h1>
-  <form action="/signup" method="post">
+  <form action="/signup/professionalSubmit" method="post">
     <input type="text" name="fname" value="First Name" onblur="blurInput(this, 'First name')" onfocus="focusInput(this)">
     <input type="text" name="lname" value="Last Name" onblur="blurInput(this, 'Last name')" onfocus="focusInput(this)">
 
     <input type="text" name="cname" value="Company" onblur="blurInput(this, 'Company')" onfocus="focusInput(this)">
     <input type="text" name="industry" value="Industry" onblur="blurInput(this, 'Industry')" onfocus="focusInput(this)">
     <input type="text" name="jobTitle" value="Job Title/Company Role" onblur="blurInput(this, 'Job Title')" onfocus="focusInput(this)">
+    <textarea name="statement" style="width: 500px; height:200px; font-size: 12px"; onfocus="focusInput(this)">Enter optional statement of intent here...</textarea>
+
 
 
     <input type="text" name="username" value="Username" onblur="blurInput(this, 'Username')" onfocus="focusInput(this)">
