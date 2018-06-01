@@ -10,6 +10,15 @@ router.get('/', function(req,res,next){
   res.render('home', context);
 });
 
+router.get('/search', function(req, res, next){
+    var context = {};
+    if(req.session.username){
+        context.username = req.session.username;
+    }
+    context.title = "Search";
+    res.render('search', context);
+});
+
 
 router.get('/about', function(req,res,next){
   var context = {};
