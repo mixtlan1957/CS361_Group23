@@ -43,7 +43,7 @@ router.get('/signup', function(req,res,next){
   res.render('accounts/signup', context);
 });
 
-router.post('/signup', function(req, res){
+router.post('/signup/student', function(req, res){
   var callbackCount = 0;
   var context = {};
   var mysql; // = req.app.get('mysql');
@@ -61,49 +61,38 @@ router.post('/signup', function(req, res){
 
   req.session.fname = req.body.fname;
   context.fname = req.session.fname;
+  user.fname = req.session.fname;
 
   req.session.lname = req.body.lname;
   context.lname = req.session.lname;
+  user.lname = req.session.lname;
   
-  if(req.body['student_signup']){
-    req.session.age = req.body.age;
-    context.age = req.session.age;
-    user.age = req.session.age;
+  req.session.age = req.body.age;
+  context.age = req.session.age;
+  user.age = req.session.age;
 
-    req.session.grade = req.body.grade;
-    context.grade = req.session.grade;
-    user.grade = req.session.grade;
+  req.session.grade = req.body.grade;
+  context.grade = req.session.grade;
+  user.grade = req.session.grade;
 
-    req.session.sname = req.body.sname;
-    context.sname = req.session.sname;
-    user.sname = req.session.sname;
+  req.session.sname = req.body.sname;
+  context.sname = req.session.sname;
+  user.sname = req.session.sname;
 
-    acctFncs.data.addStudent(user, res, mysql, context, complete);
-
-  } else if(req.body['professional_signup']){
-    //req.session.cname = req.body.cname; commented these lines out so that the professional's sign up is handled via email request
-    //context.cname = req.session.cname;
-
-    req.session.cname = req.body.cname;
-    context.cname = req.session.cname;
-    user.cname = req.session.cname;
-
-    acctFncs.data.addProfessional(user, res, mysql, context, complete);
-
-  }
+  //acctFncs.data.addStudent(user, res, mysql, context, complete);
 
   if(!req.session.username){
     res.render('accounts/signup', context);
     return;
   }
 
-  function complete(){
-    callbackCount++;
-    if(callbackCount >= 1){
-      res.render('accounts/profile', context); 
-      return;
-    }
-  } 
+  //function complete(){
+  //  callbackCount++;
+  //  if(callbackCount >= 1){
+      res.render('accounts/student/studentprofile', context); 
+ //     return;
+ //   }
+  //} 
 });
 
 router.post('/signup/professionalSubmit', function(req, res) {
@@ -241,10 +230,13 @@ router.get('/profile', function(req, res, rnext){
       context.sname = req.session.sname;
       context.age = req.session.age;
       context.grade = req.session.grade;
+      res.render('accounts/student/studentprofile', context);
+      return;
     } else if(req.session.cname){
       context.cname = req.session.cname;
+      res.render('accounts/profile', context);
+      return;
     }
-  res.render('accounts/profile', context);
   }
   else{
     res.render('home');
