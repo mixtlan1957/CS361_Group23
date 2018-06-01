@@ -61,7 +61,7 @@ router.post('/signup', function(req, res){
     req.session.sname = req.body.sname;
     context.sname = req.session.sname;
   } else if(req.body['professional_signup']){
-    //req.session.cname = req.body.cname;
+    //req.session.cname = req.body.cname; commented these lines out so that the professional's sign up is handled via email request
     //context.cname = req.session.cname;
   }
 
@@ -150,7 +150,7 @@ nodemailer.createTestAccount((err, account) => {   //citation/source: https://no
         console.log('Message sent successfully!');
         console.log(nodemailer.getTestMessageUrl(info));
 
-        //upon successful submission redirect user
+        //upon successful submission redirect user (this should probably be updated to a "success" page)
         res.render('home', context);
 
         // only needed when using pooled connections
