@@ -128,14 +128,15 @@ nodemailer.createTestAccount((err, account) => {   //citation/source: https://no
     // Message object
     let message = {
         // Comma separated list of recipients
-        to: 'Mario <mariofm.mx@gmail.com>',
+        to: 'Mario <mariofm.mx@gmail.com>, Jennifer <aldoverj@oregonstate.edu>,' + 
+        'Sean <fostesea@oregonstate.edu>, Anmolbir <mannanm@oregonstate.edu>, Andrew <schappea@oregonstate.edu>',
 
         // Subject of the message
         subject: 'Professional Account Applicant: ' + submitterName,
 
         // plaintext body
         text: 'Submitter Name: ' + submitterName + '\nIndustry: ' + subIndustry + '\nJob Title/Role:' + subJobTitle + 
-        '\nContact Email Listed' + submitterEmail + '\nStatement of Intent: ' + statement
+        '\nContact Email Listed: ' + submitterEmail + '\n\nStatement of Intent: ' + statement
     };
 
     transporter.sendMail(message, (error, info) => {
