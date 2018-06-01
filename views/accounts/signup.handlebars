@@ -16,43 +16,53 @@
   </div>
 </div>
 
-<div class="container" id="studentform">
+<div class="container" id="userforms">
   <h1>Create your Student Account</h1>
   <form action="/signup" method="post">
-
-    <input type="text" name="fname" value="First Name" onblur="blurInput(this, 'First name')" onfocus="focusInput(this)">
-    <input type="text" name="lname" value="Last Name" onblur="blurInput(this, 'Last name')" onfocus="focusInput(this)">
-
-    <input type="text" name="age" value="Age" onblur="blurNumInput(this, 'Age')" onfocus="focusNumInput(this)">
-
-    <input type="text" name="grade" value="Grade" onblur="blurNumInput(this, 'Grade')" onfocus="focusNumInput(this)">
-
-    <input type="text" name="sname" value="School" onblur="blurInput(this, 'School')" onfocus="focusInput(this)">
 
     <input type="text" name="username" value="Username" onblur="blurInput(this, 'Username')" onfocus="focusInput(this)">
     <input type="email" name="email" value="E-mail" onblur="blurInput(this, 'E-mail')" onfocus="focusInput(this)">
     <input type="password" name="password" value="password" onblur="blurInput(this, 'password')" onfocus="focusInput(this)">
+    <button id="addusers">Create User</button>
+    <div id="studentform">
+      <input type="text" name="fname" value="First Name" onblur="blurInput(this, 'First name')" onfocus="focusInput(this)">
+      <input type="text" name="lname" value="Last Name" onblur="blurInput(this, 'Last name')" onfocus="focusInput(this)">
 
-    <input type="submit" name="student_signup" value="Signup" class="btn btn-success">
+      <input type="text" name="age" value="Age" onblur="blurNumInput(this, 'Age')" onfocus="focusNumInput(this)">
+
+      <input type="text" name="grade" value="Grade" onblur="blurNumInput(this, 'Grade')" onfocus="focusNumInput(this)">
+
+      <input type="text" name="sname" value="School" onblur="blurInput(this, 'School')" onfocus="focusInput(this)">
+
+
+      <input type="submit" name="student_signup" value="Signup" class="btn btn-success">
+    </div>
   </form>
   <button class="btn btn-warning" id="stdcancel">Cancel</button>
 </div>
 
-<div class="container" id="professionalform">
+<div class="container" id="userformp">
   <h1>Create your Professional Account</h1>
   <form action="/signup" method="post">
-    <input type="text" name="fname" value="First Name" onblur="blurInput(this, 'First name')" onfocus="focusInput(this)">
-    <input type="text" name="lname" value="Last Name" onblur="blurInput(this, 'Last name')" onfocus="focusInput(this)">
-
-    <input type="text" name="cname" value="Company" onblur="blurInput(this, 'Company')" onfocus="focusInput(this)">
-    <input type="text" name="industry" value="Industry" onblur="blurInput(this, 'Industry')" onfocus="focusInput(this)">
-    <input type="text" name="jobTitle" value="Job Title/Company Role" onblur="blurInput(this, 'Job Title')" onfocus="focusInput(this)">
-
 
     <input type="text" name="username" value="Username" onblur="blurInput(this, 'Username')" onfocus="focusInput(this)">
     <input type="email" name="email" value="E-mail" onblur="blurInput(this, 'E-mail')" onfocus="focusInput(this)">
     <input type="password" name="password" value="password" onblur="blurInput(this, 'password')" onfocus="focusInput(this)">
-    <input type="submit" name="professional_signup" value="Signup" class="btn btn-success">
+
+    <button id="adduserp">Create User</button>
+
+    <div id="professionalform">
+
+      <input type="text" name="fname" value="First Name" onblur="blurInput(this, 'First name')" onfocus="focusInput(this)">
+      <input type="text" name="lname" value="Last Name" onblur="blurInput(this, 'Last name')" onfocus="focusInput(this)">
+
+      <input type="text" name="cname" value="Company" onblur="blurInput(this, 'Company')" onfocus="focusInput(this)">
+      <input type="text" name="industry" value="Industry" onblur="blurInput(this, 'Industry')" onfocus="focusInput(this)">
+      <input type="text" name="jobTitle" value="Job Title/Company Role" onblur="blurInput(this, 'Job Title')" onfocus="focusInput(this)">
+      <input type="submit" name="professional_signup" value="Signup" class="btn btn-success">
+    </div>    
+
+
   </form>
   <button class="btn btn-warning" id="prfcancel">Cancel</button>
 </div>
