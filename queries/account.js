@@ -14,11 +14,13 @@ var methods = {
   },
 
   addStudent: function(user, res, mysql, context, complete){
+    // addUser
     complete();
   },
 
   addProfessional: function(user, res, mysql, context, complete){
-    
+    // addUser
+    complete();
   }
 
 };

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
+var acctFncs = require('../queries/account.js');
 
 router.get('/', function(req,res,next){
   var context = {};
@@ -43,33 +44,66 @@ router.get('/signup', function(req,res,next){
 });
 
 router.post('/signup', function(req, res){
+  var callbackCount = 0;
   var context = {};
+  var mysql; // = req.app.get('mysql');
+  var user = {};
   context.jsscripts = ["profile.js"];
   req.session.username = req.body.username;
   context.username = req.session.username;
-  req.session.fname = req.body.fname;
-  context.fname = req.session.fname;
-  req.session.lname = req.body.lname;
-  context.lname = req.session.lname;
+  user.username = req.session.username;
+
   req.session.email = req.body.email;
   context.email = req.session.email;
+  user.email = req.session.email;
+
+  user.password = req.body.password;
+
+  req.session.fname = req.body.fname;
+  context.fname = req.session.fname;
+
+  req.session.lname = req.body.lname;
+  context.lname = req.session.lname;
+  
   if(req.body['student_signup']){
     req.session.age = req.body.age;
     context.age = req.session.age;
+    user.age = req.session.age;
+
     req.session.grade = req.body.grade;
     context.grade = req.session.grade;
+    user.grade = req.session.grade;
+
     req.session.sname = req.body.sname;
     context.sname = req.session.sname;
+    user.sname = req.session.sname;
+
+    acctFncs.data.addStudent(user, res, mysql, context, complete);
+
   } else if(req.body['professional_signup']){
     //req.session.cname = req.body.cname; commented these lines out so that the professional's sign up is handled via email request
     //context.cname = req.session.cname;
+
+    req.session.cname = req.body.cname;
+    context.cname = req.session.cname;
+    user.cname = req.session.cname;
+
+    acctFncs.data.addProfessional(user, res, mysql, context, complete);
+
   }
 
   if(!req.session.username){
     res.render('accounts/signup', context);
     return;
   }
-  res.render('accounts/profile', context);
+
+  function complete(){
+    callbackCount++;
+    if(callbackCount >= 1){
+      res.render('accounts/profile', context); 
+      return;
+    }
+  } 
 });
 
 router.post('/signup/professionalSubmit', function(req, res) {
