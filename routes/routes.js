@@ -3,6 +3,9 @@ var router = express.Router();
 var nodemailer = require('nodemailer');
 var acctFncs = require('../queries/account.js');
 
+/******************************************************************************
+ * GET /home ; renders home view
+******************************************************************************/
 router.get('/', function(req,res,next){
   var context = {};
   if(req.session.username)
@@ -12,6 +15,9 @@ router.get('/', function(req,res,next){
   res.render('home', context);
 });
 
+/******************************************************************************
+ * GET /search ; renders search view
+******************************************************************************/
 router.get('/search', function(req, res, next){
     var context = {};
     if(req.session.username){
@@ -22,6 +28,9 @@ router.get('/search', function(req, res, next){
 });
 
 
+/******************************************************************************
+ * GET /about ; renders about view
+******************************************************************************/
 router.get('/about', function(req,res,next){
   var context = {};
   if(req.session.username)
@@ -32,6 +41,9 @@ router.get('/about', function(req,res,next){
   res.render('about', context);
 });
 
+/******************************************************************************
+ * GET /signup ; renders signup view
+******************************************************************************/
 router.get('/signup', function(req,res,next){
   var context = {};
   if(req.session.username)
@@ -43,10 +55,52 @@ router.get('/signup', function(req,res,next){
   res.render('accounts/signup', context);
 });
 
+
+/******************************************************************************
+ * POST /signup/user ; route to insert a user (username, email, password) into
+ *                     the users table
+******************************************************************************/
+router.post('/signup/user', function(req, res){
+  var callbackCount = 0;
+  var context = {};
+  var mysql = req.app.get('mysql');
+  var user = {};
+  req.session.username = req.body.username;
+  context.username = req.session.username;
+  user.username = req.session.username;
+
+  req.session.email = req.body.email;
+  context.email = req.session.email;
+  user.email = req.session.email;
+
+  user.password = req.body.password;
+
+  acctFncs.data.addUser(user, res, mysql, context, complete);
+ 
+  if(!req.session.username){
+    res.render('accounts/signup', context);
+    return;
+  }
+
+  function complete(){
+   callbackCount++;
+   if(callbackCount >= 1){
+      context.user = user;
+      res.send(context.user); 
+      return;
+   }
+  } 
+
+});
+
+/******************************************************************************
+ * >> NOT WORKING << POST /signup/student ; rebuilds user object from the form
+                 getUserId is returning undefinied for some reason... otherwise this should work.                          
+******************************************************************************/
 router.post('/signup/student', function(req, res){
   var callbackCount = 0;
   var context = {};
-  var mysql; // = req.app.get('mysql');
+  var mysql = req.app.get('mysql');
   var user = {};
   context.jsscripts = ["profile.js"];
   req.session.username = req.body.username;
@@ -58,6 +112,10 @@ router.post('/signup/student', function(req, res){
   user.email = req.session.email;
 
   user.password = req.body.password;
+
+  acctFncs.data.getUserId(user.username, res, mysql, context, complete);
+  user.uid = context.uid;
+  console.log('user id: ' + user.uid);
 
   req.session.fname = req.body.fname;
   context.fname = req.session.fname;
@@ -79,20 +137,24 @@ router.post('/signup/student', function(req, res){
   context.sname = req.session.sname;
   user.sname = req.session.sname;
 
-  //acctFncs.data.addStudent(user, res, mysql, context, complete);
+
 
   if(!req.session.username){
     res.render('accounts/signup', context);
     return;
   }
 
-  //function complete(){
-  //  callbackCount++;
-  //  if(callbackCount >= 1){
+  function complete(){
+   callbackCount++;
+   if(callbackCount >= 1){
+      acctFncs.data.addStudent(user, res, mysql, context, complete);
+   }
+   if(callbackCount >= 2){
       res.render('accounts/student/studentprofile', context); 
- //     return;
- //   }
-  //} 
+      return;
+   }
+  } 
+
 });
 
 router.post('/signup/professionalSubmit', function(req, res) {
@@ -217,6 +279,7 @@ router.get('/logout', function(req, res, next){
   }
   res.render('accounts/logout', context);
 });
+
 
 router.get('/profile', function(req, res, rnext){
   var context = {};
