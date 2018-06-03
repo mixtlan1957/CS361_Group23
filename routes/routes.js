@@ -274,8 +274,8 @@ router.post('/login', function(req, res){
 router.get('/logout', function(req, res, next){
   var context = {};
   if(req.session.username){
-    context.username = req.session.username;
     req.session.username = null;
+    context.username = req.session.username;
   }
   res.render('accounts/logout', context);
 });
