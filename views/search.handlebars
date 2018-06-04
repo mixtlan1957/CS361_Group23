@@ -1,7 +1,7 @@
 <!-- Search Bar -->
 <div class="container search">
     <h1>Search for student opportunities</h1>
-    <form action="search/">
+    <form action="search/search_results" method="POST">
         <div class="row align-items-center">
             <div class="col">
                 <label for="title">What</label>
@@ -20,15 +20,4 @@
             <div class="col">location: city, state, or zip </div>
         </div>
     </form>
-</div>
-
-<!-- Search Results: -->
-
-<div class="container search_results">
-    <h2>Search Results</h2>
-    {{#each result}}
-        <ul>
-            <li>{{title}}</li>
-        </ul>
-    {{/each}}
 </div>
