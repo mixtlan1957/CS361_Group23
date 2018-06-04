@@ -273,9 +273,6 @@ router.get('/login', function(req,res,next){
 
 router.post('/login', function(req, res, next){
   var context = {};
-  // if(req.body['new_login']){
-  //   req.session.username = req.body.username;
-  // }
   var input = [req.body.username, req.body.password];
   sv_db.callProcedure("getUser", input, complete);
   function complete(rows, err) // callback after checking username and password
