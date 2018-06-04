@@ -55,6 +55,26 @@ router.get('/signup', function(req,res,next){
   res.render('accounts/signup', context);
 });
 
+router.post('/search/search_results', function(req, res){
+    var context = {};
+    var mysql = req.app.get('mysql');
+    var sql = "SELECT title FROM opportunities";
+    var title = req.body['title'];
+    var loc = req.body['location'];
+
+    if(title !== "" && loc !== ""){
+        sql = sql + " WHERE title =  "  + title + " AND WHERE location  =  "  + loc;
+    }
+    else if(title !== ""){
+        sql = sql + " WHERE title =  " + title;
+    }
+    else if (loc !== ""){
+        sql = sql + " WHERE location =  " + loc;
+    }
+
+    context.jsscripts = ["search.js"];
+    res.render('search_results', context);
+});
 
 /******************************************************************************
  * POST /signup/user ; route to insert a user (username, email, password) into
