@@ -1,5 +1,6 @@
 -- CS 361 Group 23
 -- Defines procedures to interact with SkillVenture Database
+--  mysql-ctl cli, command to start mysql in cloud9
 
 DROP PROCEDURE IF EXISTS newUser;
 DROP PROCEDURE IF EXISTS getUser;

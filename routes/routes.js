@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
 var acctFncs = require('../queries/account.js');
-var sv_db = require('../sv_database.js');
+var sv_db = require('../sv_database.js'); // for using SV procedures
 
 // private module variables
 
@@ -14,7 +14,7 @@ var mysql; // mysql module to use
 function setMySQL(input)
 {
   mysql = input;
-  sv_db.setMySQL(mysql);
+  sv_db.setMySQL(mysql); // connect mysql to the sv_database 
 }
 
 /******************************************************************************
@@ -310,7 +310,7 @@ router.post('/login', function(req, res, next){
       res.render('home', context);
       return;
     }
-    context.login_error = true;
+    context.login_error = true; // if login error occured
     res.render('accounts/login', context);
   }
 });
