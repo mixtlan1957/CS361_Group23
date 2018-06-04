@@ -29,7 +29,7 @@ var eventEmitter = new events.EventEmitter();
 //mySQL!
 var mysql = require('./dbcon.js');
 app.set('mysql', mysql);
-
+routes.setMySQL(mysql); // load mysql into routes
 
 
 //set dependencies
