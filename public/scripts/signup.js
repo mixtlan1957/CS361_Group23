@@ -1,94 +1,43 @@
 document.addEventListener('DOMContentLoaded', initButtons);
-
+/******************************************************************************
+ * initalizes [Student] and [Professional] buttons to display the appropriate
+ * signup form
+ *****************************************************************************/
 function initButtons(){
   var studentbtn = document.querySelector('#studentbtn');
-  studentbtn.addEventListener('click', loadStudentSignup);
+  studentbtn.addEventListener('click', showStudentSignup);
   document.querySelector("#userforms").style.display = "none";
-  document.querySelector("#studentform").style.display = "none";
+
   var professionalbtn = document.querySelector('#professionalbtn');
-  professionalbtn.addEventListener('click', loadProfessionalSignup);
+  professionalbtn.addEventListener('click', showProfessionalSignup);
   document.querySelector("#userformp").style.display = "none";
-  document.querySelector("#professionalform").style.display = "none";
 }
+
 /******************************************************************************
- * when a Student selects signup, the create user form is shown first.
- * when a user creates their user, the SQL query is sent to create the user
- * and insert the user into the database so that the user ID can be queried
- * and the student fields added apporopirately      
+ * displays the student signup form to the user
 ******************************************************************************/
-function loadStudentSignup(){
+function showStudentSignup(){
   document.querySelector("#stdorp").style.display = "none";
   document.querySelector("#userforms").style.display = "block";
-  document.querySelector("#addusers").addEventListener('click', showStudentForm);
-
   document.querySelector("#stdcancel").addEventListener('click', hideInputs);
-  
 }
-
 
 /******************************************************************************
- * builds user object from the username, email, and password inputs
- *                 
+ * displays the professional signup form to the user
 ******************************************************************************/
-function getUserFields(){
-  var user = {};
-  user.username = document.querySelector("#username").value;
-  user.email = document.querySelector("#email").value;
-  user.password = parseInt(document.querySelector("#password").value);
-  return user;
-}
-
-
-/******************************************************************************
- * submitUser sends a POST request to sign up the user (INSERT the username
- * email and password into the DB)
-******************************************************************************/
-function submitUser(){
-  var req = new XMLHttpRequest();
-  var user = getUserFields();
-  req.open("POST", "/signup/user", true);
-  req.setRequestHeader('Content-Type', 'application/json');
-  req.addEventListener('load', function(){
-    if(req.status >= 200 && req.status < 400){
-      var results = JSON.parse(req.responseText);
-      messageDisplay('Welcome ' + user.username + '!', 'successmsg', 1000);
-    } else {
-      console.log('unable to add user');
-    }
-  });
-  req.send(JSON.stringify(user));
-}
-
-
-
-function showStudentForm(event){
-  event.preventDefault();
-  submitUser();
-  document.querySelector("#studentform").style.display = "block";
-}
-
-function showProfessionalForm(event){
-  document.querySelector("#professionalform").style.display = "block";
-  event.preventDefault();
-}
-
-function loadProfessionalSignup(){
+function showProfessionalSignup(){
   document.querySelector("#stdorp").style.display = "none";
   document.querySelector("#userformp").style.display = "block";
-  document.querySelector("#adduserp").addEventListener('click', showProfessionalForm);
-
   document.querySelector("#prfcancel").addEventListener('click', hideInputs);
-  
-
 }
 
+/******************************************************************************
+ * cancel button hides the sign up forms and presents the original choice
+******************************************************************************/
 function hideInputs(){
-  document.querySelector("#stdorp").style.display = "block";
   document.querySelector("#userforms").style.display = "none";
-  document.querySelector("#studentform").style.display = "none";
   document.querySelector('#userformp').style.display = "none"; 
-  document.querySelector("#professionalform").style.display = "none";
-
+  document.querySelector("#stdorp").style.display = "block";
 }
 
 /******************************************************************************

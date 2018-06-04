@@ -1,3 +1,4 @@
+// NOT USED
 var methods = {
   
   addUser: function(user, res, mysql, context, complete){

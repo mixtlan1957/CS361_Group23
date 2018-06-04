@@ -90,86 +90,40 @@ router.post('/search/search_results', function(req, res){
     res.render('search_results', context);
 });
 
-/******************************************************************************
- * POST /signup/user ; route to insert a user (username, email, password) into
- *                     the users table
-******************************************************************************/
-router.post('/signup/user', function(req, res){
-  var callbackCount = 0;
-  var context = {};
-  var mysql = req.app.get('mysql');
-  var user = {};
-  req.session.username = req.body.username;
-  context.username = req.session.username;
-  user.username = req.session.username;
-
-  req.session.email = req.body.email;
-  context.email = req.session.email;
-  user.email = req.session.email;
-
-  user.password = req.body.password;
-
-  acctFncs.data.addUser(user, res, mysql, context, complete);
- 
-  if(!req.session.username){
-    res.render('accounts/signup', context);
-    return;
-  }
-
-  function complete(){
-   callbackCount++;
-   if(callbackCount >= 1){
-      context.user = user;
-      res.send(context.user); 
-      return;
-   }
-  } 
-
-});
 
 /******************************************************************************
  * >> NOT WORKING << POST /signup/student ; rebuilds user object from the form
                  getUserId is returning undefinied for some reason... otherwise this should work.                          
 ******************************************************************************/
 router.post('/signup/student', function(req, res){
-  var callbackCount = 0;
   var context = {};
-  var mysql = req.app.get('mysql');
-  var user = {};
   context.jsscripts = ["profile.js"];
+
   req.session.username = req.body.username;
   context.username = req.session.username;
-  user.username = req.session.username;
+
 
   req.session.email = req.body.email;
   context.email = req.session.email;
-  user.email = req.session.email;
 
-  user.password = req.body.password;
-
-  acctFncs.data.getUserId(user.username, res, mysql, context, complete);
-  user.uid = context.uid;
-  console.log('user id: ' + user.uid);
-
+  req.body.password = parseInt(req.body.password);
+  if(isNaN(req.body.password)){
+    req.body.password = 0;
+  }
   req.session.fname = req.body.fname;
   context.fname = req.session.fname;
-  user.fname = req.session.fname;
 
   req.session.lname = req.body.lname;
   context.lname = req.session.lname;
-  user.lname = req.session.lname;
   
   req.session.age = req.body.age;
   context.age = req.session.age;
-  user.age = req.session.age;
 
   req.session.grade = req.body.grade;
   context.grade = req.session.grade;
-  user.grade = req.session.grade;
 
   req.session.sname = req.body.sname;
   context.sname = req.session.sname;
-  user.sname = req.session.sname;
 
 
 
@@ -178,15 +132,17 @@ router.post('/signup/student', function(req, res){
     return;
   }
 
-  function complete(){
-   callbackCount++;
-   if(callbackCount >= 1){
-      acctFncs.data.addStudent(user, res, mysql, context, complete);
+  var input = [req.body.username, req.body.password, req.body.email,
+               req.body.fname, req.body.lname, req.body.sname, req.body.age, req.body.grade];
+  sv_db.callProcedure("newStudent", input, complete);
+
+  function complete(rows, err){
+   if(err){
+      console.log(err);
+      rows = [];
    }
-   if(callbackCount >= 2){
-      res.render('accounts/student/studentprofile', context); 
-      return;
-   }
+    console.log(rows);
+    res.render('accounts/student/studentprofile', context); 
   } 
 
 });
