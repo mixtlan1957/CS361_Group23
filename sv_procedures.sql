@@ -2,12 +2,14 @@
 -- Defines procedures to interact with SkillVenture Database
 
 DROP PROCEDURE IF EXISTS newUser;
+DROP PROCEDURE IF EXISTS getUser;
 DROP PROCEDURE IF EXISTS getStudents;
 DROP PROCEDURE IF EXISTS getStudent;
 DROP PROCEDURE IF EXISTS newStudent;
 DROP PROCEDURE IF EXISTS getProfessionals;
 DROP PROCEDURE IF EXISTS getProfessional;
 DROP PROCEDURE IF EXISTS newProfessional;
+DROP PROCEDURE IF EXISTS getOpportunities;
 
 
 -- *********************  Procedures *********************************
@@ -22,6 +24,15 @@ CREATE PROCEDURE newUser(IN u varchar(255), IN p int(11), IN e varchar(255))
 BEGIN
     INSERT INTO users(username, password, email)
     VALUES (u, p, e);
+END;
+//
+
+-- get user by username and password
+CREATE PROCEDURE getUser (IN u varchar(255), IN p int(11)) 
+BEGIN 
+    SELECT *
+    FROM users 
+    WHERE username = u AND password = p;
 END;
 //
 

@@ -2,6 +2,20 @@ var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
 var acctFncs = require('../queries/account.js');
+var sv_db = require('../sv_database.js');
+
+// private module variables
+
+var mysql; // mysql module to use
+
+/*
+ * imports MYSQL module to use
+ */
+function setMySQL(input)
+{
+  mysql = input;
+  sv_db.setMySQL(mysql);
+}
 
 /******************************************************************************
  * GET /home ; renders home view
@@ -257,18 +271,31 @@ router.get('/login', function(req,res,next){
   res.render('accounts/login', context);
 });
 
-router.post('/login', function(req, res){
+router.post('/login', function(req, res, next){
   var context = {};
-  if(req.body['new_login']){
-    req.session.username = req.body.username;
-  }
-
-  if(!req.session.username){
+  // if(req.body['new_login']){
+  //   req.session.username = req.body.username;
+  // }
+  var input = [req.body.username, req.body.password];
+  sv_db.callProcedure("getUser", input, complete);
+  function complete(rows, err) // callback after checking username and password
+  {
+    if (err) // error handling
+    {
+      //next(err);
+      // return;
+      rows = []; // temporary error handling
+    }
+    if (rows.length > 0) // if correct username and password
+    {
+      req.session.username = req.body.username;
+      context.username = req.session.username;
+      res.render('home', context);
+      return;
+    }
+    context.login_error = true;
     res.render('accounts/login', context);
-    return;
   }
-  context.username = req.session.username;
-  res.render('home', context);
 });
 
 router.get('/logout', function(req, res, next){
@@ -307,3 +334,6 @@ router.get('/profile', function(req, res, rnext){
 });
 
 module.exports = router;
+
+// module functions
+module.exports.setMySQL = setMySQL;

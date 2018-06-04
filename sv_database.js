@@ -40,7 +40,7 @@ function callProcedure(procedure, input, complete)
   mysql.pool.query(query, input, doQuery);
   function doQuery(err, rows, fields)
   {
-    complete(rows, err);
+    complete(rows[0], err);
   }
 }
 

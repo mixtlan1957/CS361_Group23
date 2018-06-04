@@ -3,6 +3,10 @@
   {{#if username}}
   {{else}}
   <h1> Login to your a SkillVenture Account </h1>
+  {{#if login_error}}
+    <style>p {color: red}</style>
+    <p>Invalid login credentials or error occured!</p>
+  {{/if}}
   <div class="container">
     <form action="/login" method="post">
       <div class="row justify-content-md-center">
