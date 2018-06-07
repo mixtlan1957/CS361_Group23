@@ -76,17 +76,7 @@ router.get('/search_results', function(req, res) {
   var sql = "SELECT title FROM opportunities";
   var title = req.query['title'];
   var loc = req.query['location'];
-
-  if (title !== "" && loc !== "") {
-    sql = sql + " WHERE title =  " + title + " AND WHERE location  =  " + loc;
-  }
-  else if (title !== "") {
-    sql = sql + " WHERE title =  " + title;
-  }
-  else if (loc !== "") {
-    sql = sql + " WHERE location =  " + loc;
-  }
-
+  
   if (req.body['title'] !== "" && req.body['location'] !== "") {
     sql = sql + ' WHERE (title LIKE  "%' + title + '%" OR description LIKE "%' + title + '%" OR industry LIKE "%' + title + '%") AND location LIKE "%'  + loc + '%";';
   }
