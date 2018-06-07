@@ -1,3 +1,4 @@
+// UNUSED CODE
 var methods = {
     search: function(sql, res, mysql, context, complete){
         mysql.poolquery(sql, function(error, results, fields){
