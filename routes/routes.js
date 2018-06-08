@@ -158,6 +158,81 @@ router.post('/signup/student', function(req, res) {
 });
 
 /******************************************************************************
+ * POST- handles the professional login using dbcon.js
+ ******************************************************************************/
+
+//function for adding an opportunity
+router.post('/professional_portal/add_opportunity', function(req, res){
+  var mysql=req.app.get('mysql');
+
+  var sql = "INSERT INTO opportunities (pid, title, location, description, postingDate, industry)" +
+     "VALUES(SELECT pid FROM , ?, ?, ?, ?, ?) "
+  var inserts = [req.body.title, req.body.location, req.body.description, req.body.postingDate, req.body.industry];
+  sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+    if(error) {
+      res.write(JSON.stringify(error));
+      res.end;
+    }
+    else {
+      res.redirect('home', context); 
+    }
+  });
+});
+
+
+function getID(res, mysql, context, complete) {
+  mysql.pool.query("SELECT p.id p.uid FROM professionals p INNER JOIN user u on p.uid = u.id WHERE username = " + context.username + "",
+    //var inserts = [context.username];
+    function(error, results, fields) {
+      if(error) {
+        res.write(JSON.stringify(error));
+        context.user_id = 0;
+        complete();
+      }
+      context.user_id = results;
+      complete();
+  });
+}
+
+
+//only load the professional portal if it is a professional
+router.get('/professional_portal', function(req, res, next) {
+  var context = {};
+  var pid = 0; //professional id
+  var mysql = req.app.get('mysql');
+  var callbackCount = 0;
+  
+
+  if (req.session.username) {
+    context.username = req.session.username;
+
+    getID(res, mysql, context, complete);
+
+
+    function complete() {
+      callbackCount++;
+      if(callbackCount >= 1 && context) {
+        res.render('accounts/professional_portal', context);
+
+      }
+      else {
+        res.render('home', context);
+      }
+    }  
+  }
+  
+  //if it isn't a professional, don't let the visitor access the professional_portal
+  else {
+    res.render('home', context);
+  }
+
+});
+
+
+
+
+
+/******************************************************************************
  * POST- creates new professional request
  ******************************************************************************/
 router.post('/signup/professionalSubmit', function(req, res) {
