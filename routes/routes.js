@@ -162,7 +162,7 @@ router.post('/signup/student', function(req, res) {
  ******************************************************************************/
 
 function getID(res, mysql, context, complete) {
-  mysql.pool.query("SELECT p.id FROM professionals p INNER JOIN users u on p.uid = u.id WHERE u.username = '" + context.username +"';",
+  mysql.pool.query("SELECT p.id, p.uid FROM professionals p INNER JOIN users u on p.uid = u.id WHERE u.username = '" + context.username +"';",
     //var inserts = [context.username];
     function(error, results, fields) {
       if(error) {
@@ -170,7 +170,7 @@ function getID(res, mysql, context, complete) {
         context.user_id = 0;
         complete();
       }
-      context.user_id = results;
+      context.user_id = results[0];
       complete();
   });
 }
@@ -178,43 +178,60 @@ function getID(res, mysql, context, complete) {
 
 //function for adding an opportunity
 router.post('/professional_portal/add_opportunity', function(req, res){
-  var mysql=req.app.get('mysql');
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var context = {};
-  getID(res, mysql, context, complete);
+    var context = {};
+  context.username = req.session.username;
+  var date = new Date();
+  var inserts = [parseInt(req.body.pid), req.body.title, req.body.location, req.body.description, date.toISOString().split('T')[0], req.body.industry];
+  sv_db.callProcedure("newOpportunity", inserts, complete);
+  function complete(rows, err) // callback after checking username and password
+  {
+    if (err) // error handling
+    {
 
-
-  if (req.session.username) {
-    context.username = req.session.username;
-
-    getID(res, mysql, context, complete);
-
-
-    function complete() {
-      callbackCount++;
-      if(callbackCount >= 1 && context) {
-        
-        var sql = "INSERT INTO opportunities (pid, title, location, description, postingDate, industry) VALUES(?, ?, ?, ?, ?, ?)";
-
-
-        var inserts = [context.user_id.id, req.body.title, req.body.location, req.body.description, date, req.body.industry];
-        sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
-          if(error) {
-              res.write(JSON.stringify(error));
-              res.end;
-          }
-          else {
-            res.redirect('home', context); 
-          }
-        });
-      }
-      else {
-        res.render('home', context);
-      }
-      
+      console.log(err);
+      rows = []; // temporary error handling
     }
+
+    res.render('home', context);
   }
+  
+  // var mysql=req.app.get('mysql');
+  // var today = new Date();
+  // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  // var context = {};
+  // getID(res, mysql, context, complete);
+
+
+  // if (req.session.username) {
+  //   context.username = req.session.username;
+
+  //   getID(res, mysql, context, complete);
+
+
+  //   function complete() {
+  //     callbackCount++;
+  //     if(callbackCount >= 1 && context) {
+        
+  //       var sql = "INSERT INTO opportunities (pid, title, location, description, postingDate, industry) VALUES(?, ?, ?, ?, ?, ?)";
+
+
+  //       var inserts = [context.user_id.id, req.body.title, req.body.location, req.body.description, date, req.body.industry];
+  //       sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+  //         if(error) {
+  //             res.write(JSON.stringify(error));
+  //             res.end;
+  //         }
+  //         else {
+  //           res.redirect('home', context); 
+  //         }
+  //       });
+  //     }
+  //     else {
+  //       res.render('home', context);
+  //     }
+      
+  //   }
+  // }
 });    
 
 //only load the professional portal if it is a professional
