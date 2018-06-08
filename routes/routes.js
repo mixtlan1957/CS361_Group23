@@ -166,7 +166,7 @@ router.post('/professional_portal/add_opportunity', function(req, res){
   var mysql=req.app.get('mysql');
 
   var sql = "INSERT INTO opportunities (pid, title, location, description, postingDate, industry)" +
-     "VALUES(SELECT pid FROM , ?, ?, ?, ?, ?) "
+     "VALUES(SELECT pid FROM , ?, ?, ?, ?, ?) ";
   var inserts = [req.body.title, req.body.location, req.body.description, req.body.postingDate, req.body.industry];
   sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
     if(error) {
@@ -181,7 +181,7 @@ router.post('/professional_portal/add_opportunity', function(req, res){
 
 
 function getID(res, mysql, context, complete) {
-  mysql.pool.query("SELECT p.id p.uid FROM professionals p INNER JOIN user u on p.uid = u.id WHERE username = " + context.username + "",
+  mysql.pool.query("SELECT p.id, p.uid FROM professionals p INNER JOIN users u on p.uid = u.id WHERE u.username = '" + context.username +"';",
     //var inserts = [context.username];
     function(error, results, fields) {
       if(error) {
