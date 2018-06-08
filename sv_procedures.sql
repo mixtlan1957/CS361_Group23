@@ -105,6 +105,16 @@ END;
 //
 
 
+-- create a new student
+-- u is username, p is password, e is the email, f is the first name, 
+-- l is the last name, s is the school name, a is the age, and g is the grade
+CREATE PROCEDURE newOpportunity(IN p int(11), IN t varchar(255), IN l varchar(255), IN d text, IN dt date, IN i varchar(255))
+BEGIN
+    INSERT INTO opportunities(pid, title, location, description, postingDate, industry) 
+    VALUES (p, t, l, d, dt, i);
+END;
+//
+
 -- get opportunities for search
 -- s is the search keyword
 CREATE PROCEDURE getOpportunities (IN s varchar(255))

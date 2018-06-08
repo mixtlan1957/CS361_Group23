@@ -4,8 +4,9 @@
 
  
   <form id="add_opportunity" action="professional_portal/add_opportunity" method="post">
+    <input type="number" name="pid" value="{{user_id.id}}">
   <legend>Add an job shadowing/mentorship opportunity to the site!</legend>
-  Title: <input type="text" name = "opportunity">
+  Title: <input type="text" name = "title">
 
   Location (City, State): <input type="text" name = "location">
 
